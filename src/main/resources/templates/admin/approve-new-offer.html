@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/home-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+<!--    <section class="inner-intro dark-bg bg-image overlay-dark parallax parallax-background1" data-background-img="img/full/17.jpg">-->
+<!--        <div class="container">-->
+<!--            <div class="row title">-->
+<!--                <h2 class="h2">Blog</h2>-->
+<!--                <div class="page-breadcrumb">-->
+<!--                    <a>Home</a>/<a>Blog</a>/<span>3 Columns</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Blog Post Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #1c94c4">
+        <div class="container">
+            <div class="container" style="text-align: center">
+                <h2 style="text-align: center" class="h2">Unapproved Offers</h2>
+            </div>
+            <!-- Post Item -->
+
+            <th:block th:if="${unApproved.size() == 0}">
+            <div class="container" style="text-align: center;margin-top: 100px">
+                <h2 style="text-align: center;" class="h2">No New Offers</h2>
+            </div>
+            </th:block>
+
+            <th:block th:each="o : ${unApproved}">
+            <div class="row masonry" >
+                <div class="col-md-4 col-sm-6 nf-item spacing-grid">
+                    <div class="blog-post">
+                        <div class="post-media">
+                            <div class="owl-carousel item1-carousel nf-carousel-theme">
+                                <th:block th:each="p : ${o.pictures}">
+                                <div class="item">
+                                    <img th:src="${p}" alt="" />
+                                </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="post-meta"><span th:text="| ${o.createdOn}|"></span></div>
+                        <div class="post-header">
+                            <h5><a href="blog-single-slider-post.html" th:text="${o.title}"></a></h5>
+                        </div>
+                        <ul class="project-detail-block ptb-15">
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Model :</strong><span th:text="${o.model}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Condition :</strong><span th:text="${o.productCondition}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Price :</strong><span th:text="${o.price}"></span>
+                                </p>
+                            </li>
+                            </ul>
+                        <div class="post-more-link pull-right"><a th:href="@{/admin/approve/{id}(id = ${o.id})}">Approve<i class="fa fa-check-circle-o right"></i></a></div>
+                    </div>
+                </div>
+            </div>
+            </th:block>
+            <!-- End Post Item -->
+
+            <!-- Pagination Nav -->
+<!--            <div class="pagination-nav mt-60 mt-xs-30">-->
+<!--                <ul>-->
+<!--                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>-->
+<!--                    <li class="active"><a href="#">1</a></li>-->
+<!--                    <li><a href="#">2</a></li>-->
+<!--                    <li><a href="#">3</a></li>-->
+<!--                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+            <!-- End Pagination Nav -->
+        </div>
+    </section>
+    <!-- End Blog Post Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+
+</body>
+</html>

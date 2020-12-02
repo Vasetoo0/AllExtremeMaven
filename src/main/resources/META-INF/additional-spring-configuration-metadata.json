@@ -1,8 +1,13 @@
 {
   "properties": [
     {
-      "name": "cloudinary.cloud_name",
+      "name": "sspring.datasource.username",
       "type": "java.lang.String",
-      "description": "Description for cloudinary.cloud_name."
-  }
-] }
+      "description": "Description for sspring.datasource.username."
+    },
+    {
+      "name": "tabula.clean-up",
+      "type": "java.lang.String",
+      "description": "Description for tabula.clean-up."
+    }
+  ] }

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+    <!--    <section class="inner-intro dark-bg bg-image overlay-dark parallax parallax-background1" data-background-img="img/full/27.jpg">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row title">-->
+    <!--                <h2 class="h2">Blog</h2>-->
+    <!--                <div class="page-breadcrumb">-->
+    <!--                    <a>Home</a>/<a>Blog</a>/<span>Slider Post</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Blog Post Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #479860" th:object="${story}">
+        <div class="container">
+            <div class="row">
+                <!-- Post Bar -->
+                <div class="col-lg-9 col-md-9 blog-post-hr">
+                    <div class="blog-post mb-30">
+                        <div class="post-meta"><span th:text="|By *{creator}, on *{#temporals.format(createdOn,'dd-MM-yyyy HH:mm')}|"></span></div>
+
+                        <div class="post-header">
+                            <h2 th:text="*{title}" >Title</h2>
+                        </div>
+
+                        <div class="post-media">
+                            <div class="owl-carousel item1-carousel nf-carousel-theme">
+                                <th:block th:each="p : *{pictures}">
+                                    <div class="item">
+                                        <img th:src="${p}" alt=""/>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+
+                        <div class="post-entry">
+                            <p th:text="*{description}"></p>
+                        </div>
+                    </div>
+
+                    <hr/>
+
+                    <div class="clearfix"></div>
+
+
+                    <!-- COMMENTS -->
+                    <div class="post-comment mtb-30">
+                        <h4>Comments <span class="comment-numb" th:text="|(*{comments.size()})|"></span></h4>
+                        <ul class="comment-list mt-30">
+                            <th:block th:each="c : *{comments}">
+                            <li>
+                                <div class="">
+                                    <div class="comment-detail">
+                                        <h6 th:text="${c.user}"></h6>
+                                        <div class="post-meta"><span th:text="${#temporals.format(c.createdOn,'dd-MM-yyyy HH:mm')}"></span>
+                                            <h6>Comment :)</h6>
+                                            <p style="text-transform: none; margin-top: 15px;margin-bottom: 15px;border-style: ridge;border-color: #9DC199"
+                                               th:text="${c.description}"></p>
+                                        </div>
+                                        <button sec:authorize="hasRole('ADMIN')" class="btn btn-lg btn-black">Remove</button>
+                                    </div>
+                                </div>
+                            </li>
+                            </th:block>
+                        </ul>
+                    </div>
+
+                    <hr/>
+
+                    <div class="mtb-60" sec:authorize="isAuthenticated()">
+                        <h4>Leave a comment</h4>
+                        <div class="row mt-30">
+                            <form class="container" th:action="@{/story/{id}/addComment(id=*{id})}" th:method="POST">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea placeholder="Message" name="description" id="description" class="form-full"
+                                                  required></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn btn-lg btn-black">Post</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- End Post Bar -->
+
+                <!-- Sidebar -->
+                <div class="col-lg-3 col-md-3 mt-sm-30" style="width: 259px">
+                    <div class="sidebar-widget">
+                        <h5>Recent Post</h5>
+                        <hr>
+                        <ul class="widget-post">
+                            <th:block th:each="r : ${recent}">
+                            <li>
+                                <a class="widget-post-media">
+                                    <img th:src="${r.pictures.get(0)}" alt="">
+                                </a>
+                                <div class="widget-post-info">
+                                    <h4><a th:href="@{/{sport}/stories/read/{id}(sport=${#session.getAttribute('selectedSport')},id = ${r.id})}"
+                                           th:text="${r.title}">Title</a></h4>
+                                    <div class="post-meta"><span th:text="|By ${r.creator}, on ${#temporals.format(r.createdOn,'dd-MM-yyyy HH:mm')}|"></span></div>
+                                </div>
+                            </li>
+                            </th:block>
+                        </ul>
+                    </div>
+                </div>
+                <!-- End Sidebar -->
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Post Section -->
+
+    <!-- Post Next Prev Bar -->
+    <!--    <section class="mb-60">-->
+    <!--        <div class="container">-->
+    <!--            <div class="item-nav">-->
+    <!--                <a href="" class="item-prev">-->
+    <!--                    <div class="prev-btn"><i class="fa fa-angle-left"></i></div>-->
+    <!--                    <div class="item-prev-text xs-hidden">-->
+    <!--                        <h6>Prev Post</h6>-->
+    <!--                    </div>-->
+    <!--                </a>-->
+
+    <!--                <a class="item-all-view">-->
+    <!--                    <h6>Blog Page</h6>-->
+    <!--                </a>-->
+
+    <!--                <a href="" class="item-next">-->
+    <!--                    <div class="next-btn"><i class="fa fa-angle-right"></i></div>-->
+    <!--                    <div class="item-next-text xs-hidden">-->
+    <!--                        <h6>Next Post</h6>-->
+    <!--                    </div>-->
+    <!--                </a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- End Post Next Prev Bar -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+
+</body>
+</html>

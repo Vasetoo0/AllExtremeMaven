@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+<!--    <section class="inner-intro bg-image overlay-light parallax parallax-background1" data-background-img="img/full/02.jpg">-->
+<!--        <div class="container">-->
+<!--            <div class="row title">-->
+<!--                <h2 class="h2">Shop</h2>-->
+<!--                <div class="page-breadcrumb">-->
+<!--                    <a>Home</a>/<a>Shop</a>/<span>3 Columns</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Shop Item Section -->
+    <section id="shop-item" class="ptb ptb-sm-80" style="background-color: #58B0C5">
+        <div class="container">
+            <div class="container" style="text-align: center">
+                <h2 style="text-align: center" class="h2">Market</h2>
+            </div>
+            <th:block th:if="${offers.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Offers Found</h2>
+                </div>
+            </th:block>
+            <!-- Sort List -->
+<!--            <div class="row ">-->
+<!--                <div class="col-md-12">-->
+<!--                    <div class="shop-filter mb-15">-->
+<!--                        <div class="float-left float-none-xs">-->
+<!--                            <form>-->
+<!--                                <label class="inline">Sort By</label>-->
+<!--                                <select class="input-md round">-->
+<!--                                    <option>Default Sorting</option>-->
+<!--                                    <option>Popular</option>-->
+<!--                                    <option>Latest</option>-->
+<!--                                    <option>Average Price</option>-->
+<!--                                    <option>High Price</option>-->
+<!--                                    <option>Low Price</option>-->
+<!--                                </select>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <!-- End Sort List -->
+
+            <!-- Shop Item -->
+            <div class="row container-grid">
+
+                <th:block th:each="o : ${offers}">
+                <div class="nf-item col-md-4 col-sm-6 mb-30">
+                    <div class="item-box">
+                        <!-- Shop item images -->
+                        <div class="shop-item">
+                            <div class="item-img">
+                                <img th:src="${o.pictures.get(0)}" />
+                            </div>
+                            <div class="item-mask">
+                                <div class="item-mask-detail">
+                                    <div class="item-mask-detail-ele">
+                                        <a class="btn btn-line-xs btn-white-line"
+                                           th:href="@{/{sport}/market/{id}(sport = ${#session.getAttribute('selectedSport')},id = ${o.id})}">
+                                            <i class="fa fa-shopping-cart"></i>
+                                            View Item</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Shop item images -->
+
+                        <!-- Shop item info -->
+                        <div class="shop-item-info">
+                            <a href="shop-detail.html">
+                                <h6 class="shop-item-name" th:text="${o.title}">Sed fringilla mauris</h6>
+                            </a>
+                            <div class="shop-item-price"><span th:text="|${o.price} lv.|"></span></div>
+                        </div>
+                        <!-- Shop item info -->
+                    </div>
+                </div>
+                </th:block>
+            </div>
+            <!-- End Shop Item -->
+
+            <!-- Pagination Nav -->
+<!--            <div class="pagination-nav mtb-30">-->
+<!--                <ul>-->
+<!--                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>-->
+<!--                    <li class="active"><a href="#">1</a></li>-->
+<!--                    <li><a href="#">2</a></li>-->
+<!--                    <li><a href="#">3</a></li>-->
+<!--                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>-->
+<!--                </ul>-->
+<!--            </div>-->
+            <!-- End Pagination Nav -->
+        </div>
+    </section>
+    <!-- End Shop Item Section -->
+
+    <hr />
+
+    <!-- Client Logos Section -->
+<!--    <section id="client-logos" class="wow fadeIn ptb ptb-sm-80" style="background-color: #58B0C5" >-->
+<!--        <div class="container">-->
+<!--            <div class="owl-carousel client-carousel nf-carousel-theme ">-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/01.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/02.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/03.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/04.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/05.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/06.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/08.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/01.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/02.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="item">-->
+<!--                    <div class="client-logo">-->
+<!--                        <img src="img/logos/03.png" alt="" />-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- End Client Logos Section -->
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>

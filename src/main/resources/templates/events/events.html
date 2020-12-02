@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+    <!--    <section class="inner-intro dark-bg bg-image overlay-dark parallax parallax-background1" data-background-img="img/full/25.jpg">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row title">-->
+    <!--                <h2 class="h2">Portfolio</h2>-->
+    <!--                <div class="page-breadcrumb">-->
+    <!--                    <a>Home</a>/<a>Portfolio</a>/<span>Grid</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Work Detail Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #605C00">
+        <div class="container">
+            <div class="container" style="text-align: center">
+                <h2 style="text-align: center" class="h2">Events</h2>
+            </div>
+            <!-- work Filter -->
+            <!--            <div class="row">-->
+            <!--                <ul class="col container-filter categories-filter">-->
+            <!--                    <li><a class="categories active" data-filter="*">All</a></li>-->
+            <!--                    <li><a class="categories" data-filter=".branding">Branding</a></li>-->
+            <!--                    <li><a class="categories" data-filter=".design">Design</a></li>-->
+            <!--                    <li><a class="categories" data-filter=".photo">Photo</a></li>-->
+            <!--                    <li><a class="categories" data-filter=".coffee">coffee</a></li>-->
+            <!--                </ul>-->
+            <!--            </div>-->
+            <!-- End work Filter -->
+            <th:block th:if="${events.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Events Found</h2>
+                </div>
+            </th:block>
+            <div class="row container-grid nf-col-2">
+                <th:block th:each="e : ${events}">
+                    <div class="nf-item branding coffee spacing">
+                        <div class="item-box">
+                            <a th:href="@{/{sport}/events/details/{id}(sport=${#session.getAttribute('selectedSport')},id=${e.id})}">
+                                <img alt="1"
+                                     th:src="${e.pictures.get(0)}"
+                                     class="item-container">
+                                <div class="item-mask">
+                                    <div class="item-caption">
+                                        <h5 class="white" th:text="${e.title}">Event Name</h5>
+                                        <p class="white" th:text="${#temporals.format(e.eventDate,'dd-MM-yyyy HH:mm')}">
+                                            Event Date</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </section>
+    <!-- End Work Detail Section -->
+
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+<!--    <section class="inner-intro dark-bg bg-image overlay-dark parallax parallax-background1" data-background-img="img/full/26.jpg">-->
+<!--        <div class="container">-->
+<!--            <div class="row title">-->
+<!--                <h2 class="h2">Blog</h2>-->
+<!--                <div class="page-breadcrumb">-->
+<!--                    <a>Home</a>/<a>Blog</a>/<span>1 Columns</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Blog Post Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #f1b0b7">
+        <div class="container">
+            <div class="container" style="text-align: center">
+                <h2 style="text-align: center" class="h2">Find Store</h2>
+            </div>
+            <th:block th:if="${stores.size() == 0}">
+                <div class="container" style="text-align: center;margin-top: 100px">
+                    <h2 style="text-align: center;" class="h2">No Stores Found</h2>
+                </div>
+            </th:block>
+            <div class="row">
+                <!-- Post Item -->
+                <div class="col-lg-9 col-md-9">
+                    <div class="row">
+
+                        <div class="col-md-12 blog-post-hr">
+
+                            <th:block th:each="s : ${stores}">
+                            <div class="blog-post mb-30">
+                                <div class="post-media">
+                                    <img th:src="${s.picture}" alt="" />
+                                </div>
+                                <div class="post-meta"><span th:text="|City : ${s.city}|"></span></div>
+                                <div class="post-meta"><span th:text="|Name : ${s.name}|"></span></div>
+                                <div class="post-entry"> Description :
+                                    <textarea th:text="${s.description}" class="form-full" id="description" rows="7"  disabled></textarea>
+                                </div>
+                                <div class="post-more-link pull-right"><a th:href="${s.mapsLink}">View on Google Maps<i
+                                        class="fa fa-long-arrow-right right"></i></a></div>
+                                <iframe th:src="${s.iFrameLink}"
+                                        width="730" height="450" frameborder="0" style="border:0; float: right"
+                                        allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            </div>
+                                <hr/>
+                            </th:block>
+                        </div>
+
+
+                    </div>
+
+                    <!-- Pagination Nav -->
+<!--                    <div class="pagination-nav text-left mt-60 mtb-xs-30">-->
+<!--                        <ul>-->
+<!--                            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>-->
+<!--                            <li class="active"><a href="#">1</a></li>-->
+<!--                            <li><a href="#">2</a></li>-->
+<!--                            <li><a href="#">3</a></li>-->
+<!--                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                    <!-- End Pagination Nav -->
+
+                </div>
+                <!-- End Post Item -->
+
+                <!-- Sidebar -->
+<!--                <div class="col-lg-3 col-md-3 mt-sm-60">-->
+
+<!--                    <div class="sidebar-widget">-->
+<!--                        <h5>Search</h5>-->
+<!--                        <div class="widget-search">-->
+<!--                            <input class="form-full input-lg" type="text" value="" placeholder="Search Here" name="search" id="wid-search">-->
+<!--                            <input type="submit" value="" name="email" id="wid-s-sub">-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="sidebar-widget">-->
+<!--                        <h5>Cities</h5>-->
+<!--                        <hr>-->
+<!--                        <ul>-->
+<!--                            <li><a>Photography</a></li>-->
+<!--                            <li><a>Web Design</a></li>-->
+<!--                            <li><a>Lifestyle</a></li>-->
+<!--                            <li><a>Responsive</a></li>-->
+<!--                            <li><a>MultiPurpose Theme</a></li>-->
+<!--                            <li><a>Agency</a></li>-->
+<!--                            <li><a>Portfolio</a></li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <!-- End Sidebar -->
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Post Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>

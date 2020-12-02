@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+        <th:block th:include="~{fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+    <!--    <section class="inner-intro bg-image overlay-light parallax parallax-background1"-->
+    <!--             data-background-img="img/full/26.jpg">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row title">-->
+    <!--                <h2 class="h2">Blog</h2>-->
+    <!--                <div class="page-breadcrumb">-->
+    <!--                    <a>Home</a>/<a>Blog</a>/<span>1 Columns</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Blog Post Section -->
+    <section class="ptb ptb-sm-80" style="background-color: #337C93" >
+        <div class="container">
+            <div class="container" style="text-align: center">
+                <h2 style="text-align: center" class="h2">Destinations </h2>
+            </div>
+            <div class="row">
+                <th:block th:if="${destinations.size() == 0}">
+                    <div class="container" style="text-align: center;margin-top: 100px">
+                        <h2 style="text-align: center;" class="h2">No Destination Found</h2>
+                    </div>
+                </th:block>
+                <!-- Post Item -->
+                <th:block th:each="d : ${destinations}">
+                <div class="col-md-8 offset-md-2 blog-post-hr">
+                    <div class="blog-post mb-30">
+                        <div class="post-media">
+                            <div class="owl-carousel item1-carousel nf-carousel-theme">
+                                <th:block th:each="p : ${d.pictures}">
+                                <div class="item">
+                                    <img th:src="${p}" alt=""/>
+                                </div>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="post-header">
+                            <h4 style="text-align: center" th:text="${d.title}"></h4>
+                        </div>
+                        <div class="post-entry">
+                            <p th:text="${d.description}"></p>
+                        </div>
+                        <div class="post-more-link pull-right"><a th:href="${d.mapsLink}" target="_blank">View on Google Maps<i
+                                class="fa fa-long-arrow-right right"></i></a></div>
+                        <iframe th:src="${d.iFrameLink}"
+                                width="730" height="450" frameborder="0" style="border:0; float: right"
+                                allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+
+                        <!-- If logged userEntity is admin -->
+<!--                    <p style="text-align: center; background-color: #337C93; margin-top: 10px">-->
+<!--                        <button class="btn btn-lg bg-warning" href="">Edit Destination</button>-->
+<!--                        <button style="text-align: center" class="btn btn-lg bg-danger" href="">Remove Destination-->
+<!--                        </button>-->
+<!--                    </p>-->
+                    <hr/>
+                    <!-- Pagination Nav -->
+                    <!--                    <div class="pagination-nav mt-60 mtb-xs-30">-->
+                    <!--                        <ul>-->
+                    <!--                            <li><a href="#"><i class="fa fa-angle-left"></i></a></li>-->
+                    <!--                            <li class="active"><a href="#">1</a></li>-->
+                    <!--                            <li><a href="#">2</a></li>-->
+                    <!--                            <li><a href="#">3</a></li>-->
+                    <!--                            <li><a href="#"><i class="fa fa-angle-right"></i></a></li>-->
+                    <!--                        </ul>-->
+                    <!--                    </div>-->
+                    <!-- End Pagination Nav -->
+
+                </div>
+                </th:block>
+                <!-- End Post Item -->
+            </div>
+        </div>
+    </section>
+    <!-- End Blog Post Section -->
+
+    <!-- End CONTENT ------------------------------------------------------------------------------>
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:include="~{/fragment/head}"></th:block>
+</head>
+
+<body>
+
+<!-- Preloader -->
+<section id="preloader">
+    <div class="loader" id="loader">
+        <div class="loader-img"></div>
+    </div>
+</section>
+<!-- End Preloader -->
+
+<!-- Sidebar Menu -->
+<th:block th:include="~{/fragment/sidebar}"></th:block>
+<!-- End Sidebar Menu -->
+
+<!-- Site Wraper -->
+<div class="wrapper">
+
+    <!-- Header ("header--dark", "header-transparent", "header--sticky")-->
+    <header id="header" class="header header--dark header-transparent header--sticky">
+        <!-- Nav Bar -->
+
+        <th:block th:if="${#session.getAttribute('selectedSport') == null}" th:include="~{fragment/home-nav}"></th:block>
+        <th:block th:if="${#session.getAttribute('selectedSport') != null}" th:include="~{fragment/category-nav}"></th:block>
+        <!-- End Nav Bar -->
+    </header>
+    <!-- End Header -->
+
+    <!-- CONTENT --------------------------------------------------------------------------------->
+    <!-- Intro Section -->
+    <!--    <section class="inner-intro">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row title">-->
+    <!--                <h2 class="h2">Shop</h2>-->
+    <!--                <div class="page-breadcrumb">-->
+    <!--                    <a>Home</a>/<a>Shop</a>/<span>Shop Detail</span>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!-- End Intro Section -->
+
+    <!-- Shop Item Detail Section -->
+    <section id="shop-item" class="ptb ptb-sm-80" style="background-color: #58B0C5">
+        <div class="container">
+            <div class="row " th:object="${offer}">
+                <!-- Shop Item -->
+                <div class="col-md-6 mb-sm-60">
+
+                    <div class="shop-detail-item">
+                        <!--Item Images-->
+                        <div class="post-media">
+                            <div class="owl-carousel item1-carousel nf-carousel-theme">
+                                    <div th:each="p : ${offer.pictures}" class="item">
+                                        <img th:src="${p}" alt=""/>
+                                    </div>
+                            </div>
+                        </div>
+                        <!-- End Item Images -->
+
+                        <!-- Item zoom -->
+                        <!--                        <div class="sp-full-screen"><a class="cbox-gallary1" href="#"><i class="fa fa-search-plus"></i>Zoom</a>-->
+                        <!--                        </div>-->
+                        <!-- End Item zoom -->
+
+                    </div>
+                </div>
+                <!-- End Shop Item -->
+
+                <!-- Shop info -->
+                <div class="col-md-6">
+                    <div class="shop-detail-info">
+                        <h4 th:text="*{title}"></h4>
+                        <div class="shop-item-price mtb-15 ptb-15"><span th:text="|*{price} lv.|"></span></div>
+                        <hr/>
+                        <ul class="project-detail-block ptb-15">
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Model :</strong><span th:text="*{model}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Condition :</strong><span
+                                        th:text="*{productCondition}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Seller :</strong><span th:text="*{creator}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Contact :</strong><span th:text="*{telContact}"></span>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    <strong class="dark-color">Created on :</strong><span
+                                        th:text="${#temporals.format(offer.createdOn,'dd-MM-yyyy HH:mm')}"></span>
+                                </p>
+                            </li>
+                        </ul>
+                        <th:block th:if="${!offer.creator.equals(#authentication.getName())}"
+                                  sec:authorize="isAuthenticated()">
+                            <th:block th:unless="${allReadyAdded}">
+                            <ul class="list-none-ib ptb-15 text-cap">
+                                <li class="mr-30"><a class="" onclick="document.getElementById('addToWish').submit();">
+                                    <i class="fa fa-heart left"></i>Add to wishlist</a></li>
+                            </ul>
+                            </th:block>
+                        </th:block>
+                        <form id="addToWish"
+                              th:action="@{/{sport}/market/{id}/addToWishList(sport=*{sport.name()}, id=*{id})}"
+                              method="post"></form>
+                        <!-- Tab -->
+                        <div class="tabs mt-15">
+                            <ul>
+                                <li><a href="#tabs-1" style="background-color: #58B0C5">Description</a></li>
+                                <!--                                <li><a href="#tabs-2">Data sheet</a></li>-->
+                                <!--                                <li><a href="#tabs-3">Review</a></li>-->
+                            </ul>
+
+                            <div class="ui-tab-content">
+                                <!-- Description -->
+                                <div id="tabs-1">
+                                    <textarea th:text="*{description}" class="form-full" id="description" rows="7"  disabled></textarea>
+                                </div>
+                                <!-- End Description -->
+                            </div>
+                        </div>
+                        <!-- End Tab -->
+                        <th:block sec:authorize="isAuthenticated()" th:if="${offer.creator.equals(#authentication.getName()) || #authentication.authorities.contains('ADMIN')}">
+                            <form th:action="@{/{sport}/market/{id}/delete(sport=*{sport.name()}, id=*{id})}" th:method="DELETE">
+                                <p style="text-align: center; background-color: #58B0C5; margin-top: 10px">
+                                    <!--                            <button class="btn btn-lg bg-warning" href="">Edit Offer</button>-->
+                                    <button style="text-align: center" class="btn btn-lg bg-danger" type="submit">Delete Offer
+                                    </button>
+                                </p>
+                            </form>
+                        </th:block>
+                    </div>
+                </div>
+                <!-- End Shop info -->
+            </div>
+        </div>
+
+    </section>
+
+    <!-- End Shop Item Section -->
+
+    <!--    &lt;!&ndash; Related Product Slider&ndash;&gt;-->
+    <!--    <section class="ptb ptb-sm-80" style="background-color: #58B0C5">-->
+    <!--        <div class="container">-->
+    <!--            <div class="row text-center">-->
+    <!--                <h4 class="col-12">Related Product</h4>-->
+    <!--            </div>-->
+    <!--            <div class="spacer-30"></div>-->
+    <!--            <div class="row">-->
+    <!--                <div class="owl-carousel item4-carousel nf-carousel-theme o-flow-hidden">-->
+    <!--                    <div class="item">-->
+    <!--                        <div class="nf-col-padding">-->
+    <!--                            <div class="item-box">-->
+    <!--                                &lt;!&ndash; Shop item images &ndash;&gt;-->
+    <!--                                <div class="shop-item">-->
+    <!--                                    <div class="item-img">-->
+    <!--                                        <img src="img/product/07.jpg" />-->
+    <!--                                    </div>-->
+    <!--                                    <div class="item-mask">-->
+    <!--                                        <div class="item-mask-detail">-->
+    <!--                                            <div class="item-mask-detail-ele">-->
+    <!--                                                <a class="btn btn-line-xs btn-white-line"><i class="fa fa-shopping-cart"></i>View</a>-->
+    <!--                                            </div>-->
+    <!--                                        </div>-->
+    <!--                                    </div>-->
+    <!--                                </div>-->
+    <!--                                &lt;!&ndash; End Shop item images &ndash;&gt;-->
+
+    <!--                                &lt;!&ndash; Shop item info &ndash;&gt;-->
+    <!--                                <div class="shop-item-info">-->
+    <!--                                    <a href="shop-detail.html">-->
+    <!--                                        <h6 class="shop-item-name">Veritatis et quasi architecto</h6>-->
+    <!--                                    </a>-->
+    <!--                                    <div class="shop-item-price"><span>$399.00</span></div>-->
+    <!--                                </div>-->
+    <!--                                &lt;!&ndash; Shop item info &ndash;&gt;-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </section >-->
+    <!--    &lt;!&ndash; End Related Product Slider &ndash;&gt;-->
+
+
+    <!-- END CONTENT ---------------------------------------------------------------------------->
+
+    <th:block th:include="~{fragment/footer}"></th:block>
+
+</div>
+<!-- Site Wraper End -->
+
+
+<!-- JS -->
+<th:block th:include="~{fragment/JS}"></th:block>
+
+<!--<script type="text/javascript">-->
+<!--    $(window).load(function () {-->
+<!--        $('.sp-wrap').smoothproducts();-->
+<!--    });-->
+<!--</script>-->
+
+</body>
+</html>
