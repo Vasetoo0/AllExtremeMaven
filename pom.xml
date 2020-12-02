@@ -12,9 +12,11 @@
     <artifactId>springproject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>springproject</name>
+
     <description>Demo project for Spring Boot</description>
+
     <properties>
-        <java.version>14</java.version>
+        <java.version>11</java.version>
     </properties>
     <dependencies>
         <dependency>
@@ -97,6 +99,14 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <release>9.0.4</release>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>appengine-maven-plugin</artifactId>
